@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Exclude } from 'class-transformer';
 import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+
 export class UserCreateDto {
   @IsEmail()
   @IsNotEmpty()

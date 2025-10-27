@@ -1,4 +1,4 @@
 export class UserSignUpResponseDto {
-  userId: number;
+  userId: string;
   token: string;
 }

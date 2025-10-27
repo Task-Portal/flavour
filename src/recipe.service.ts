@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import { Recipe, Prisma } from 'generated/prisma';
+import { Recipe, Prisma } from '@prisma/client';
 import { CreateRecipeDto } from './dto/create.recipe.dto';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class RecipesService {
     });
   }
 
-  async createRecipe(userId: number, dto: CreateRecipeDto): Promise<Recipe> {
+  async createRecipe(userId: string, dto: CreateRecipeDto): Promise<Recipe> {
     return this.prisma.$transaction(async (tx) => {
       const metricIds: number[] = [];
       for (const ing of dto.ingredients) {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import {
@@ -11,9 +12,9 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './user.service';
 import { RecipesService } from './recipe.service';
-import { Recipe as RecipeModel } from 'generated/prisma';
+import { Recipe as RecipeModel } from '@prisma/client/';
 
-import type { UserCreateDto } from './dto/user.create.dto';
+import { UserCreateDto } from './dto/user.create.dto';
 import { CreateRecipeDto } from './dto/create.recipe.dto';
 import { UserSignUpResponseDto } from './dto/user.singup-response.dto';
 import { UserSignInDto } from './dto/user.singin.dto';
