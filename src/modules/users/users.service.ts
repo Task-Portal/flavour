@@ -1,18 +1,16 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { PrismaService } from './prisma.service';
-import { User, Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
+import { UserSignUpResponseDto } from '../auth/dtos/user.singup-response.dto';
 import bcrypt from 'bcryptjs';
+import { UserSignInDto } from '../auth/dtos/user.singin.dto';
+import { PrismaService } from 'src/prisma.service';
 import { ConfigService } from '@nestjs/config';
-import { UserSignInDto } from './dto/user.singin.dto';
-import { UserSignUpResponseDto } from './dto/user.singup-response.dto';
 import { JwtService } from '@nestjs/jwt';
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -24,26 +22,11 @@ export class UsersService {
   async user(
     userWhereUniqueInput: Prisma.UserWhereUniqueInput,
   ): Promise<User | null> {
-    return this.prisma.user.findUnique({
+    const user = await this.prisma.user.findUnique({
       where: userWhereUniqueInput,
     });
-  }
 
-  async users(params: {
-    skip?: number;
-    take?: number;
-    cursor?: Prisma.UserWhereUniqueInput;
-    where?: Prisma.UserWhereInput;
-    orderBy?: Prisma.UserOrderByWithRelationInput;
-  }): Promise<User[]> {
-    const { skip, take, cursor, where, orderBy } = params;
-    return this.prisma.user.findMany({
-      skip,
-      take,
-      cursor,
-      where,
-      orderBy,
-    });
+    return user;
   }
 
   async createUser(

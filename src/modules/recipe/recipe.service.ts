@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from './prisma.service';
-import { Recipe, Prisma } from '@prisma/client';
-import { CreateRecipeDto } from './dto/create.recipe.dto';
+import { Prisma, Recipe } from '@prisma/client';
+import { CreateRecipeDto } from 'src/dto/create.recipe.dto';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
-export class RecipesService {
+export class RecipeService {
   constructor(private prisma: PrismaService) {}
 
   async recipe(
