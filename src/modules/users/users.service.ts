@@ -7,7 +7,7 @@ import { Prisma, User } from '@prisma/client';
 import { UserSignUpResponseDto } from '../auth/dtos/user.singup-response.dto';
 import bcrypt from 'bcryptjs';
 import { UserSignInDto } from '../auth/dtos/user.singin.dto';
-import { PrismaService } from 'src/prisma.service';
+import { PrismaService } from 'src/modules/prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
@@ -22,7 +22,7 @@ export class UsersService {
   async user(
     userWhereUniqueInput: Prisma.UserWhereUniqueInput,
   ): Promise<User | null> {
-    const user = await this.prisma.user.findUnique({
+    const user = await this.prisma.user.findFirst({
       where: userWhereUniqueInput,
     });
 
@@ -35,8 +35,9 @@ export class UsersService {
     const isUserExist = await this.user({ email: newUser.email });
 
     if (isUserExist) {
-      throw new ConflictException('Email is already taken');
+      throw new ConflictException('Wrong credentials.');
     }
+
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(newUser.password, salt);
     newUser.password = passwordHash;
@@ -53,8 +54,8 @@ export class UsersService {
     if (!user) throw new NotFoundException('Wrong credentials');
 
     const passwordMatches = await bcrypt.compare(
-      user.password,
       userData.password,
+      user.password,
     );
 
     if (passwordMatches) {

@@ -2,18 +2,18 @@ import {
   Controller,
   Get,
   Param,
-  Post,
-  UseGuards,
+  // Post,
+  // UseGuards,
   Request,
 } from '@nestjs/common';
 import { RecipeService } from './recipe.service';
-import { AuthGuard } from '@nestjs/passport';
-import { CreateRecipeDto } from 'src/dto/create.recipe.dto';
+// import { AuthGuard } from '@nestjs/passport';
+// import { CreateRecipeDto } from 'src/dto/create.recipe.dto';
 import { Recipe as RecipeModel } from '@prisma/client/';
 
-interface RequestWithUserId extends Request {
-  userId: string;
-}
+// interface RequestWithUserId extends Request {
+//   userId: string;
+// }
 
 @Controller('recipe')
 export class RecipeController {
@@ -42,12 +42,12 @@ export class RecipeController {
     });
   }
 
-  @UseGuards(AuthGuard)
-  @Post('recipe/')
-  async create(
-    @Request() req: RequestWithUserId,
-    newRecipe: CreateRecipeDto,
-  ): Promise<RecipeModel> {
-    return this.recipeService.createRecipe(req.userId, newRecipe);
-  }
+  // @UseGuards(AuthGuard)
+  // @Post('recipe/')
+  // async create(
+  //   @Request() req: RequestWithUserId,
+  //   newRecipe: CreateRecipeDto,
+  // ): Promise<RecipeModel> {
+  //   return this.recipeService.createRecipe(req.userId, newRecipe);
+  // }
 }

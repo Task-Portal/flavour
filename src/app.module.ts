@@ -5,14 +5,15 @@ import { ConfigModule } from '@nestjs/config';
 
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './common/constants';
-import { PrismaService } from './prisma.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { RecipeModule } from './modules/recipe/recipe.module';
+import { PrismaModule } from './modules/prisma/prisma.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
+      isGlobal: true,
     }),
     JwtModule.register({
       global: true,
@@ -22,8 +23,8 @@ import { RecipeModule } from './modules/recipe/recipe.module';
     AuthModule,
     UsersModule,
     RecipeModule,
+    PrismaModule,
   ],
   controllers: [AppController],
-  providers: [PrismaService],
 })
 export class AppModule {}
